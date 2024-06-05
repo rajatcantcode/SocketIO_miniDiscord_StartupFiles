@@ -21,10 +21,14 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
+const namespaces = require("./data/namespaces");
+
 io.on("connection", (socket) => {
   console.log(socket.id + " has connected");
   socket.emit("welcome", { data: "Welcome to the server" });
   socket.on("messageFromClient", (data) => {
     console.log(data.data);
   });
+
+  socket.emit("nsList", namespaces);
 });
